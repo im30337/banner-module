@@ -27,17 +27,17 @@
             console.log("whenClickCallback");
           }
         };
+        //-----------------------------定義所有功能的function
+        Module.prototype.initial = function(setup) {
+          console.log("this is a prototype function!!!:", setup);
+          this.__proto__.close();
+          
 
-        Module.prototype.func = function() {
-          console.log("this is a prototype function!!!");
-        };
-
-        Module.prototype.newMethod = function(opts) {
-          console.log("this is a prototype function!!!:", opts);
         };
 
         Module.prototype.close = function(opts) {
-          console.log('close');
+          console.log("close");
+          console.log('el',this.$ele);
           this.$ele.removeClass("open");
           this.$ele.addClass("close");
           this.$ele
@@ -55,10 +55,9 @@
             .children("a")
             .children("img")
             .css("top", "0px");
-          //this.$ele.addClass("test");
-          // console.log('this is a prototype function!!!:', opts);
         };
-
+        //-----------------------------定義所有功能的function end
+        console.log('$.fn: ',$.fn);
         $.fn[ModuleName] = function(methods, options) {
           return this.each(function() {
             var $this = $(this);
@@ -73,6 +72,7 @@
               } else if (
                 typeof methods === "string" ||
                 typeof options === "object"
+                //只做初始設定?
               ) {
                 module[methods](options);
               } else {
@@ -89,7 +89,8 @@
               $this.data(ModuleName, module);
               console.log("module: ", module);
               console.log(module.option);
-
+              //----------------------------------------------執行區
+              module.initial();
               if (module.option.open) {
                 module.open();
               } else {
@@ -118,7 +119,11 @@
   </body>
   <script>
     $(function() {
-      var autoToggle = true;
+      // 問題區
+      // 1.button在過場動畫會飄離
+      // 2.Module架構理解困難
+      // 3.$.fn的建立問題和原因
+      // 4.動態修改class名稱在css檔更好的處理方式
       // $(".banner").banner({
       //   // 設定一開始是否為開或合
       //   openAtStart: true, // [boolean] true | false
@@ -144,9 +149,11 @@
       //     console.log("whenTransition");
       //   }
       // });
-      $('.banner').banner({
+      //--------------------------------------test section
+      var autoToggle = true;
+      $(".banner").banner({
         autoToggle: true
-      })
+      });
       $("#expend-btn").click(function(e) {
         console.log(autoToggle);
         if (autoToggle) {

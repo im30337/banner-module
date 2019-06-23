@@ -132,6 +132,9 @@ table {
   position: relative;
   width: 1200px;
   overflow: hidden;
+  /* 目前收起時會導致按鈕懸空 */
+  transition-duration: 3s;
+
 }
 .banner.close {
   height: 80px;
