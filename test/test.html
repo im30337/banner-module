@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Test</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://kit.fontawesome.com/03dc0cd36e.js"></script>
+    <link rel="stylesheet" href="./test.css" />
+  </head>
+  <body>
+    <script>
+      (function($) {
+        "use strict";
+        var ModuleName = "banner";
+
+        var Module = function(ele, options) {
+          this.ele = ele;
+          this.$ele = $(ele);
+          this.option = options;
+        };
+
+        Module.DEFAULTS = {
+          style: "classname",
+          whenClickCallback: function() {
+            console.log("whenClickCallback");
+          }
+        };
+
+        Module.prototype.func = function() {
+          console.log("this is a prototype function!!!");
+        };
+
+        Module.prototype.newMethod = function(opts) {
+          console.log("this is a prototype function!!!:", opts);
+        };
+
+        Module.prototype.close = function(opts) {
+          console.log('close');
+          this.$ele.removeClass("open");
+          this.$ele.addClass("close");
+          this.$ele
+            .children("a")
+            .children("img")
+            .css("top", "-300px");
+        };
+
+        Module.prototype.open = function(opts) {
+          console.log("open");
+          console.log(this.$ele);
+          this.$ele.removeClass("close");
+          this.$ele.addClass("open");
+          this.$ele
+            .children("a")
+            .children("img")
+            .css("top", "0px");
+          //this.$ele.addClass("test");
+          // console.log('this is a prototype function!!!:', opts);
+        };
+
+        $.fn[ModuleName] = function(methods, options) {
+          return this.each(function() {
+            var $this = $(this);
+            var module = $this.data(ModuleName);
+            var opts = null;
+            if (!!module) {
+              if (
+                typeof methods === "string" &&
+                typeof options === "undefined"
+              ) {
+                module[methods]();
+              } else if (
+                typeof methods === "string" ||
+                typeof options === "object"
+              ) {
+                module[methods](options);
+              } else {
+                throw "unsupported options!";
+              }
+            } else {
+              opts = $.extend(
+                {},
+                Module.DEFAULTS,
+                typeof methods === "object" && options,
+                typeof options === "object" && options
+              );
+              module = new Module(this, opts);
+              $this.data(ModuleName, module);
+              console.log("module: ", module);
+              console.log(module.option);
+
+              if (module.option.open) {
+                module.open();
+              } else {
+                console.log("沒打開");
+              }
+            }
+          });
+        };
+      })(jQuery);
+    </script>
+    <div class="banner close">
+      <a class="wrap" href="#">
+        <img
+          class="img img-default"
+          src="../imgs-20190619T100302Z-001/imgs/1200x380.png"
+          title="輸入廣告促銷說明文字"
+          alt="輸入廣告促銷說明文字"
+        />
+        <button id="expend-btn" class="expand-btn">
+          展開
+          <i class="fas fa-sort-down" style="color: white"></i>
+          <i class="fas fa-sort-up" style="color: white; display: none;"></i>
+        </button>
+      </a>
+    </div>
+  </body>
+  <script>
+    $(function() {
+      var autoToggle = true;
+      // $(".banner").banner({
+      //   // 設定一開始是否為開或合
+      //   openAtStart: true, // [boolean] true | false
+      //   // 設定啟動後是否要自動開或合，若設為false，就不要自勳開合；若為true是馬上自動開合；若為數字是幾毫秒之後開合
+      //   autoToggle: true, // [boolean|number] true | false | 3000
+      //   // 設定收合展開按鈕
+      //   button: {
+      //     closeText: "收合", // [string]
+      //     openText: "展開", // [string]
+      //     class: "btn" // [string]
+      //   },
+      //   // 設定模組在各狀態時的class
+      //   class: {
+      //     closed: "closed", // [string]
+      //     closing: "closing", // [string]
+      //     opened: "opened", // [string]
+      //     opening: "opening" // [string]
+      //   },
+      //   // 是否要有transition效果
+      //   transition: true,
+      //   // 當有transition時，要執行的callback function
+      //   whenTransition: function() {
+      //     console.log("whenTransition");
+      //   }
+      // });
+      $('.banner').banner({
+        autoToggle: true
+      })
+      $("#expend-btn").click(function(e) {
+        console.log(autoToggle);
+        if (autoToggle) {
+          $(".banner").banner("open");
+          autoToggle = false;
+        } else {
+          $(".banner").banner("close");
+          autoToggle = true;
+        }
+        // $(".banner").banner("toggle");
+
+        // $(".banner").banner("open");
+
+        // $(".banner").banner("close");
+      });
+    });
+  </script>
+</html>
