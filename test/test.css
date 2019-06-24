@@ -91,6 +91,7 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -105,17 +106,21 @@ nav,
 section {
   display: block;
 }
+
 body {
   line-height: 1;
 }
+
 ol,
 ul {
   list-style: none;
 }
+
 blockquote,
 q {
   quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -123,10 +128,12 @@ q:after {
   content: "";
   content: none;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
 /* ---------------- Custom css -------------- */
 .banner {
   position: relative;
@@ -136,20 +143,35 @@ table {
   transition-duration: 3s;
 
 }
-.banner.close {
+
+.banner.close,
+.banner.closing {
   height: 80px;
 }
-.banner.open {
+
+.banner.open,
+.banner.opening {
   height: 300px;
   top: 0;
 }
+
 /* 圖片展開時刪除top */
-.img-default {
-  width: 100%;
+.img {
   position: absolute;
+  top: 0;
+}
+
+.banner.close>a>.img,
+.banner.closing>a>.img {
   top: -300px;
 }
-.expand-btn {
+
+.banner.open>a>.img,
+.banner.opening>a>.img {
+  top: 0;
+}
+
+.btn {
   position: absolute;
   height: 40px;
   width: 60px;
