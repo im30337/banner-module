@@ -1,0 +1,51 @@
+.banner {
+  position: relative;
+  overflow: hidden;
+  height: 80px;
+  width: fit-content;
+}
+.banner > a > img {
+  position: relative;
+  top: 0px;
+}
+.banner.opened,
+.banner.opening {
+  height: 300px;
+}
+
+.banner.opened > a > img,
+.banner.opening > a > img {
+  top: 0px;
+}
+
+.banner.closed,
+.banner.closing {
+  height: 80px;
+}
+
+.banner.closed > a > img,
+.banner.closing > a > img {
+  top: -300px;
+}
+
+.banner > button {
+  position: absolute;
+  padding: 3px;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  border: 0;
+  background-color: black;
+  color: white;
+}
+body .banner > button:after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 2px;
+  margin-right: 2px;
+  margin-left: 3px;
+  border-style: solid;
+  border-width: 0 3px 3px;
+  border-color: transparent transparent #eeeeee;
+}
