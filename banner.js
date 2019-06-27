@@ -50,14 +50,13 @@
     $(element)
       .append("<button></button>")
       .addClass(
-        (option.openAtStart
+        option.openAtStart
           ? "opened " + option.class.opened
-          : "closed " + option.class.closed) +
-          " " +
-          option.button.class
+          : "closed " + option.class.closed
       );
     $(element)
       .children("button")
+      .addClass(option.button.class)
       .html(
         option.openAtStart ? option.button.closeText : option.button.openText
       )
@@ -113,7 +112,7 @@
     this.open();
   };
 
-  Module.prototype.set = function() {
+  Module.prototype.initialize = function() {
     onInit(this.$ele, this.option);
     if (this.option.autoToggle) {
       setTimeout(() => {
@@ -133,7 +132,7 @@
           module[methods]();
         },
         option: () => {
-          module.set();
+          module.initialize();
         },
         error: () => {
           throw "unsupported options!";
@@ -169,7 +168,7 @@ $(".banner").banner({
   button: {
     closeText: "閉", // [string]
     openText: "開", // [string]
-    class: "bbubbb" // [string]
+    class: "buuuuuuttton" // [string]
   },
   transition: true
 });
