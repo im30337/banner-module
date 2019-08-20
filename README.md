@@ -1,1 +1,1 @@
-banner-module
+banner-module (jquery)
